@@ -37,26 +37,6 @@ def speak_with_vapi(text: str):
 
 
 # Define function declarations for the two tools
-hello_world_5_declaration = {
-    "name": "hello_world_5",
-    "description": "Prints 'hello world' exactly 5 times",
-    "parameters": {
-        "type": "object",
-        "properties": {},
-        "required": [],
-    },
-}
-
-hello_world_10_declaration = {
-    "name": "hello_world_10", 
-    "description": "Prints 'hello world' exactly 10 times",
-    "parameters": {
-        "type": "object",
-        "properties": {},
-        "required": [],
-    },
-}
-
 describe_image_declaration = {
     "name": "describe_image",
     "description": "Describe the image and return a detailed description of it",
@@ -73,18 +53,6 @@ describe_image_declaration = {
 }
 
 # Actual function implementations
-def hello_world_5() -> dict[str, str]:
-    """Print 'hello world' 5 times."""
-    for i in range(5):
-        print("hello world")
-    return {"message": "Printed 'hello world' 5 times"}
-
-def hello_world_10() -> dict[str, str]:
-    """Print 'hello world' 10 times.""" 
-    for i in range(10):
-        print("hello world")
-    return {"message": "Printed 'hello world' 10 times"}
-
 def describe_image(image_path: str) -> dict[str, str]:
     model = "c4ai-aya-vision-8b"
 
@@ -232,8 +200,6 @@ def continuous_speech_to_text(device_index=None):
 
 # Function mapping for execution
 available_functions = {
-    "hello_world_5": hello_world_5,
-    "hello_world_10": hello_world_10,
     "describe_image": describe_image,
 }
 
