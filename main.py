@@ -208,86 +208,27 @@ def main():
 
     print("microphone speech to text setup")
     print("=" * 40)
-    device_index = 1
-    continuous_speech_to_text(device_index)
-    # Configure the client and tools
-    # client = genai.Client(
-    #     api_key=os.getenv("GEMINI_API_KEY"),
-    # )
-    # tools = types.Tool(function_declarations=[hello_world_5_declaration, hello_world_10_declaration, describe_image_declaration])
-    # config = types.GenerateContentConfig(tools=[tools])
-    
-    # print("Hello World Function Calling Demo with Vapi WebSocket TTS")
-    # print("Available commands:")
-    # print(", ".join(available_functions.keys()))
-    # print("- Type 'quit' to exit")
-    # print("- Results will be read aloud using Vapi WebSocket TTS\n")
-    
-    # while True:
-    #     user_input = input("User: ")
-        
-    #     if user_input.lower() in ['quit', 'exit', 'q']:
-    #         print("Goodbye!")
-    #         break
-            
-    #     # Create content for the model
-    #     contents = [
-    #         types.Content(
-    #             role="user", 
-    #             parts=[types.Part(text=user_input)]
-    #         )
-    #     ]
-        
-    #     try:
-    #         # Send request with function declarations
-    #         response = client.models.generate_content(
-    #             model="gemini-2.0-flash-exp",
-    #             contents=contents,
-    #             config=config,
-    #         )
-            
-    #         # Check if the model wants to call a function
-    #         if response.candidates[0].content.parts[0].function_call:
-    #             function_call = response.candidates[0].content.parts[0].function_call
-    #             function_name = function_call.name
-    #             function_args = function_call.args or {}
-                
-    #             # Execute the function if it exists
-    #             if function_name in available_functions:
-    #                 result = available_functions[function_name](**function_args)
-    #                 print(f"Function result: {result['message']}")
-                    
-    #                 # Send the function result back to the model for a final response
-    #                 function_result_content = types.Content(
-    #                     role="function",
-    #                     parts=[types.Part(
-    #                         function_response=types.FunctionResponse(
-    #                             name=function_name,
-    #                             response=result
-    #                         )
-    #                     )]
-    #                 )
-                    
-    #                 # Add the function result to the conversation and get final response
-    #                 contents.append(function_result_content)
-    #                 final_response = client.models.generate_content(
-    #                     model="gemini-2.0-flash-exp",
-    #                     contents=contents,
-    #                     config=config,
-    #                 )
-                    
-    #                 print(f"Assistant: {final_response.candidates[0].content.parts[0].text}")
-    #                 speak_with_vapi(final_response.candidates[0].content.parts[0].text)
-    #             else:
-    #                 print(f"Function {function_name} not found!")
-    #         else:
-    #             # Direct text response from the model
-    #             print(f"Assistant: {response.candidates[0].content.parts[0].text}")
-                
-    #     except Exception as e:
-    #         print(f"Error: {e}")
-        
-    #     print()  # Add blank line for readability
+    device_index = 2 # 2 -> Cable-C Output
+    # Print the name of the selected device
 
+
+    p = pyaudio.PyAudio()
+    # print("Available audio input devices:")
+    # for i in range(50):
+    #     try:
+    #         info = p.get_device_info_by_index(i)
+    #         print(f"Device {i}: {info['name']}")
+    #     except Exception:
+    #         pass
+    # p.terminate()
+    p = pyaudio.PyAudio()
+    device_info = p.get_device_info_by_index(device_index)
+    print(f"Device ID {device_index} name:", device_info['name'])
+    p.terminate()
+
+
+
+    continuous_speech_to_text(device_index)
+   
 if __name__ == "__main__":
     main()
