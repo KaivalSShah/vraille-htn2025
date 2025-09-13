@@ -25,6 +25,7 @@ if os.getenv("VAPI_PRIVATE_API_KEY"):
     vapi_tts = VapiWebSocketTTS(os.getenv("VAPI_PRIVATE_API_KEY"))
 
 def speak_with_vapi(text: str):
+    print(f"Speaking: {text}")
     """Use Vapi WebSocket to convert text to speech."""
     if not vapi_tts:
         print("❌ Vapi WebSocket TTS not available.")
@@ -119,8 +120,8 @@ def continuous_speech_to_text(device_index=None):
     recognizer = sr.Recognizer()
 
     client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-    tools = types.Tools(function_declarations=[describe_image_declaration])
-    config = types.GenerateContentConfig(tools=[tools])
+    tools = [types.Tool(function_declarations=[describe_image_declaration])]
+    config = types.GenerateContentConfig(tools=tools)
     
     # Initialize microphone with specified device index
     if device_index is not None:
