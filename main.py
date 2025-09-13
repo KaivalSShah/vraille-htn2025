@@ -175,6 +175,7 @@ def continuous_speech_to_text(device_index=None):
                     else:
                         # Direct text response from the model
                         print(f"Assistant: {response.candidates[0].content.parts[0].text}")
+                        speak_with_vapi(response.candidates[0].content.parts[0].text)
                         
                 except Exception as e:
                     print(f"Error: {e}")
