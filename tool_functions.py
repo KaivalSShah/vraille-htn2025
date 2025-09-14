@@ -153,9 +153,21 @@ def recognize_face() -> dict[str, str]:
     except Exception as e:
         return {"message": f"❌ Exception occurred: {e}"}
 
-# Function mapping for execution
+def braille_mode_on() -> dict[str, str]:
+    return {
+        "message": "Braille mode is now ON."
+    }
+
+def braille_mode_off() -> dict[str, str]:
+    return{
+        "message": "Braille mode is now OFF."
+    }
+
 AVAILABLE_FUNCTIONS = {
+    "read_text": read_text,
     "describe_image": describe_image,
     "recognize_face": recognize_face,
+    "braille_mode_on": braille_mode_on,
+    "braille_mode_off": braille_mode_off
     # Add new functions to this mapping as you create them
 }

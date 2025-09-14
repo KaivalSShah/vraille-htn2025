@@ -8,9 +8,13 @@ from tool_declarations import ALL_TOOL_DECLARATIONS
 from tool_functions import AVAILABLE_FUNCTIONS
 import cv2
 import pyaudio
+from braille_control import form_brailles
 
 # Load environment variables from .env file
 load_dotenv()
+
+# braille mode
+braille_mode_on = False
 
 # Initialize Vapi WebSocket TTS
 vapi_tts = None
@@ -174,16 +178,30 @@ def continuous_speech_to_text(device_index=None):
                                 contents=contents,
                                 config=config,
                             )
-                            
+
+                            # print(result)
                             print(f"Assistant: {final_response.candidates[0].content.parts[0].text}")
-                            speak_with_vapi(final_response.candidates[0].content.parts[0].text)
+                            if function_name == "braille_mode_on":
+                                braille_mode_on = True
+                                continue
+                            if function_name == "braille_mode_off":
+                                braille_mode_on = False
+                            
+
+                            if braille_mode_on:
+                                form_brailles(final_response.candidates[0].content.parts[0].text)
+                            else:
+                                speak_with_vapi(final_response.candidates[0].content.parts[0].text)
                         else:
                             print(f"Function {function_name} not found!")
                     else:
                         # Direct text response from the model
                         print(f"Assistant: {response.candidates[0].content.parts[0].text}")
-                        speak_with_vapi(response.candidates[0].content.parts[0].text)
-                        
+                        if braille_mode_on:
+                            form_brailles(final_response.candidates[0].content.parts[0].text)
+                        else:
+                            speak_with_vapi(final_response.candidates[0].content.parts[0].text)
+                    
                 except Exception as e:
                     print(f"Error: {e}")
                     

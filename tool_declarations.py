@@ -16,6 +16,17 @@ read_text_declaration = {
     "description": "Read any text visible in the camera view - signs, menus, documents, labels, books, etc.",
 }
 
+braille_mode_on_declaration = {
+    "name": "braille_mode_on",
+    "description": "Enable braille mode for accessibility features. Returns True if braille mode is ON.",
+}
+
+braille_mode_off_declaration = {
+    "name": "braille_mode_off",
+    "description": "Disable braille mode for accessibility features. Returns True if braille mode is OFF.",
+}
+
+
 # Add more tool declarations here as you expand functionality
 # Example for future tools:
 
@@ -51,7 +62,10 @@ read_text_declaration = {
 
 # List of all available tool declarations
 ALL_TOOL_DECLARATIONS = [
+    read_text_declaration,
     describe_image_declaration,
     recognize_face_declaration,
+    braille_mode_on_declaration,
+    braille_mode_off_declaration
     # Add new declarations to this list as you create them
 ]
