@@ -2,19 +2,10 @@ from google import genai
 from google.genai import types
 import os
 from dotenv import load_dotenv
-import cohere
-import PIL
-import requests
-import base64
-import platform
-import subprocess
-import websocket
-import threading
-import json
-import struct
-import pyaudio
-from vapiwebsockettts import VapiWebSocketTTS
 import speech_recognition as sr
+from vapiwebsockettts import VapiWebSocketTTS
+from tool_declarations import ALL_TOOL_DECLARATIONS
+from tool_functions import AVAILABLE_FUNCTIONS
 import cv2
 
 # Load environment variables from .env file
@@ -92,7 +83,7 @@ def continuous_speech_to_text(device_index=None):
     recognizer = sr.Recognizer()
 
     client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-    tools = [types.Tool(function_declarations=[describe_image_declaration])]
+    tools = [types.Tool(function_declarations=ALL_TOOL_DECLARATIONS)]
     config = types.GenerateContentConfig(tools=tools)
     
     # Initialize microphone with specified device index
@@ -149,8 +140,8 @@ def continuous_speech_to_text(device_index=None):
                         function_args = function_call.args or {}
                         
                         # Execute the function if it exists
-                        if function_name in available_functions:
-                            result = available_functions[function_name](**function_args)
+                        if function_name in AVAILABLE_FUNCTIONS:
+                            result = AVAILABLE_FUNCTIONS[function_name](**function_args)
                             print(f"Function result: {result['message']}")
                             
                             # Send the function result back to the model for a final response
@@ -203,10 +194,6 @@ def continuous_speech_to_text(device_index=None):
             print(f"Unexpected error: {e}")
             break
 
-# Function mapping for execution
-available_functions = {
-    "describe_image": describe_image,
-}
 
 def main():
 
