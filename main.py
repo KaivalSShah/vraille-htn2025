@@ -7,6 +7,7 @@ from vapiwebsockettts import VapiWebSocketTTS
 from tool_declarations import ALL_TOOL_DECLARATIONS
 from tool_functions import AVAILABLE_FUNCTIONS
 import cv2
+import pyaudio
 
 # Load environment variables from .env file
 load_dotenv()
@@ -199,7 +200,7 @@ def main():
 
     print("microphone speech to text setup")
     print("=" * 40)
-    device_index = 2 # 2 -> Cable-C Output
+    device_index = 1 # 2 -> Cable-C Output
     # Print the name of the selected device
 
 
