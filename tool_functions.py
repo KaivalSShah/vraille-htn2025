@@ -165,7 +165,7 @@ def braille_mode_off() -> dict[str, str]:
 
 AVAILABLE_FUNCTIONS = {
     "read_text": read_text,
-    "describe_image": describe_image,
+    "describe_infront_of_me": describe_image,
     "recognize_face": recognize_face,
     "braille_mode_on": braille_mode_on,
     "braille_mode_off": braille_mode_off

@@ -115,8 +115,8 @@ class VapiWebSocketTTS:
                 rate=16000,
                 output=True,
                 frames_per_buffer=1024,
-                output_device_index=5  # 5 is Input device (default speaker)
-                # output_device_index=7  # 5 is Input device (default speaker)
+                # output_device_index=5  # 5 is Input device (default speaker)
+                output_device_index=7  # 5 is Input device (default speaker)
             )
             self.is_playing = True
         except Exception as e:

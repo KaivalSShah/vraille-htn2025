@@ -233,7 +233,7 @@ def main():
 
     print("microphone speech to text setup")
     print("=" * 40)
-    device_index = 1 #1 # 2 -> Cable-C Output
+    device_index = 2 #1 # 2 -> Cable-C Output
     # Print the name of the selected device
 
 

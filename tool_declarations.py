@@ -2,8 +2,8 @@
 # These define the function signatures that the AI can call
 
 describe_image_declaration = {
-    "name": "describe_image",
-    "description": "Describe what you are seeing from the camera, and return a detailed description of it",
+    "name": "describe_infront_of_me",
+    "description": "Describe what you are seeing from the camera and what is in front of me, and return a detailed description of it",
 }
 
 recognize_face_declaration = {
