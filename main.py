@@ -30,52 +30,52 @@ def speak_with_vapi(text: str):
 
 
 # Define function declarations for the two tools
-describe_image_declaration = {
-    "name": "describe_image",
-    "description": "Describe what you are seeing from the camera, and return a detailed description of it",
-}
+# describe_image_declaration = {
+#     "name": "describe_image",
+#     "description": "Describe what you are seeing from the camera, and return a detailed description of it",
+# }
 
-def describe_image() -> dict[str, str]:
-    model = "c4ai-aya-vision-8b"
-    co = cohere.ClientV2(os.getenv("COHERE_API_KEY"))
+# def describe_image() -> dict[str, str]:
+#     model = "c4ai-aya-vision-8b"
+#     co = cohere.ClientV2(os.getenv("COHERE_API_KEY"))
 
-    # open camera
-    cap = cv2.VideoCapture(1) # 0 built-in webcam, 1 is virtual cam
-    if not cap.isOpened():
-        return {"message": "❌ Could not access the camera."}
+#     # open camera
+#     cap = cv2.VideoCapture(1) # 0 built-in webcam, 1 is virtual cam
+#     if not cap.isOpened():
+#         return {"message": "❌ Could not access the camera."}
 
-    ret, frame = cap.read()
-    cap.release()
+#     ret, frame = cap.read()
+#     cap.release()
 
-    if not ret:
-        return {"message": "❌ Failed to capture image from camera."}
+#     if not ret:
+#         return {"message": "❌ Failed to capture image from camera."}
 
-    # Show captured frame in a window
-    # cv2.imshow("Captured Image", frame)
-    # print("📷 Press any key in the image window to continue...")
-    # cv2.waitKey(0)  # wait for a key press
-    # cv2.destroyAllWindows()
+#     # Show captured frame in a window
+#     # cv2.imshow("Captured Image", frame)
+#     # print("📷 Press any key in the image window to continue...")
+#     # cv2.waitKey(0)  # wait for a key press
+#     # cv2.destroyAllWindows()
 
-    # Encode captured frame as JPEG
-    _, buffer = cv2.imencode(".jpg", frame)
-    base64_image_url = f"data:image/jpeg;base64,{base64.b64encode(buffer).decode('utf-8')}"
+#     # Encode captured frame as JPEG
+#     _, buffer = cv2.imencode(".jpg", frame)
+#     base64_image_url = f"data:image/jpeg;base64,{base64.b64encode(buffer).decode('utf-8')}"
 
-    # Send to Cohere vision model - Fixed the image_url structure
-    response = co.chat(
-        model=model,
-        messages=[
-            {
-                "role": "user",
-                "content": [
-                    {"type": "text", "text": "Describe the image and return a detailed description of it"},
-                    {"type": "image_url", "image_url": {"url": base64_image_url}},  # Fixed: wrapped in object with 'url' key
-                ],
-            }
-        ],
-        temperature=0.3,
-    )
+#     # Send to Cohere vision model - Fixed the image_url structure
+#     response = co.chat(
+#         model=model,
+#         messages=[
+#             {
+#                 "role": "user",
+#                 "content": [
+#                     {"type": "text", "text": "Describe the image and return a detailed description of it"},
+#                     {"type": "image_url", "image_url": {"url": base64_image_url}},  # Fixed: wrapped in object with 'url' key
+#                 ],
+#             }
+#         ],
+#         temperature=0.3,
+#     )
 
-    return {"message": response.message.content[0].text}
+#     return {"message": response.message.content[0].text}
 
 def continuous_speech_to_text(device_index=None):
     """

@@ -3,17 +3,7 @@
 
 describe_image_declaration = {
     "name": "describe_image",
-    "description": "Describe the image and return a detailed description of it",
-    "parameters": {
-        "type": "object",
-        "properties": {
-            "image_path": {
-                "type": "string",
-                "description": "The path to the image file to describe"
-            }
-        },
-        "required": ["image_path"],
-    },
+    "description": "Describe what you are seeing from the camera, and return a detailed description of it",
 }
 
 # Add more tool declarations here as you expand functionality
