@@ -85,6 +85,9 @@ def continuous_speech_to_text(device_index=None):
     """
     Continuous speech recognition with microphone selection
     """
+
+    global braille_mode_on
+
     recognizer = sr.Recognizer()
 
     client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
@@ -189,6 +192,7 @@ def continuous_speech_to_text(device_index=None):
                             
 
                             if braille_mode_on:
+                                # parallel thread form brailles and speak with vapi
                                 form_brailles(final_response.candidates[0].content.parts[0].text)
                             else:
                                 speak_with_vapi(final_response.candidates[0].content.parts[0].text)
@@ -198,9 +202,9 @@ def continuous_speech_to_text(device_index=None):
                         # Direct text response from the model
                         print(f"Assistant: {response.candidates[0].content.parts[0].text}")
                         if braille_mode_on:
-                            form_brailles(final_response.candidates[0].content.parts[0].text)
+                            form_brailles(response.candidates[0].content.parts[0].text)
                         else:
-                            speak_with_vapi(final_response.candidates[0].content.parts[0].text)
+                            speak_with_vapi(response.candidates[0].content.parts[0].text)
                     
                 except Exception as e:
                     print(f"Error: {e}")
@@ -229,7 +233,7 @@ def main():
 
     print("microphone speech to text setup")
     print("=" * 40)
-    device_index = 1 # 2 -> Cable-C Output
+    device_index = 1 #1 # 2 -> Cable-C Output
     # Print the name of the selected device
 
 
