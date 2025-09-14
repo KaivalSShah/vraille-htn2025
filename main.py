@@ -40,7 +40,7 @@ def speak_with_vapi(text: str):
 # Define function declarations for the two tools
 describe_image_declaration = {
     "name": "describe_image",
-    "description": "Describe the image seeing taken from the camera, and return a detailed description of it",
+    "description": "Describe what you are seeing from the camera, and return a detailed description of it",
 }
 
 def describe_image() -> dict[str, str]:
