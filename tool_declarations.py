@@ -6,6 +6,16 @@ describe_image_declaration = {
     "description": "Describe what you are seeing from the camera, and return a detailed description of it",
 }
 
+recognize_face_declaration = {
+    "name": "recognize_face",
+    "description": "Recognize the face of the person in the camera view",
+}
+
+read_text_declaration = {
+    "name": "read_text",
+    "description": "Read any text visible in the camera view - signs, menus, documents, labels, books, etc.",
+}
+
 # Add more tool declarations here as you expand functionality
 # Example for future tools:
 
@@ -42,5 +52,6 @@ describe_image_declaration = {
 # List of all available tool declarations
 ALL_TOOL_DECLARATIONS = [
     describe_image_declaration,
+    recognize_face_declaration,
     # Add new declarations to this list as you create them
 ]
