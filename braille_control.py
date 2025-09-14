@@ -1,7 +1,7 @@
 import requests
 import time
 
-ARDUINO_IP = "10.37.114.81"  # Update this with your Arduino's IP
+ARDUINO_IP = "10.37.97.204"  # Update this with your Arduino's IP
 PORT = 8080
 
 def send_braille_pattern(pattern: str):

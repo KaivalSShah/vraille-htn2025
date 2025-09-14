@@ -3,27 +3,38 @@
 
 describe_image_declaration = {
     "name": "describe_infront_of_me",
-    "description": "Describe what you are seeing from the camera and what is in front of me, and return a detailed description of it",
+    "description": (
+        "Use this function whenever the user asks about their surroundings, "
+        "what is visible, or what is in front of the camera. "
+        "Return a detailed description of everything in view."
+    ),
 }
 
 recognize_face_declaration = {
     "name": "recognize_face",
-    "description": "Recognize the face of the person in the camera view",
+    "description": (
+        "Use this function whenever the user asks 'who is this person', "
+        "'who am I looking at', or to identify/recognize a face in the camera. "
+        "Return the person's identity if known, otherwise say unknown."
+    ),
 }
 
 read_text_declaration = {
     "name": "read_text",
-    "description": "Read any text visible in the camera view - signs, menus, documents, labels, books, etc.",
+    "description": (
+        "Use this function whenever the user asks to read, transcribe, or interpret "
+        "any visible text in the camera view (signs, menus, documents, labels, books, screens, etc.)."
+    ),
 }
 
 braille_mode_on_declaration = {
     "name": "braille_mode_on",
-    "description": "Enable braille mode for accessibility features. Returns True if braille mode is ON.",
+    "description": "Turn on braille mode for accessibility features. Returns True if braille mode is ON.",
 }
 
 braille_mode_off_declaration = {
     "name": "braille_mode_off",
-    "description": "Disable braille mode for accessibility features. Returns True if braille mode is OFF.",
+    "description": "Turn off braille mode for accessibility features. Returns True if braille mode is OFF.",
 }
 
 
