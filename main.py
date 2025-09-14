@@ -2,19 +2,10 @@ from google import genai
 from google.genai import types
 import os
 from dotenv import load_dotenv
-import cohere
-import PIL
-import requests
-import base64
-import platform
-import subprocess
-import websocket
-import threading
-import json
-import struct
-import pyaudio
-from vapiwebsockettts import VapiWebSocketTTS
 import speech_recognition as sr
+from vapiwebsockettts import VapiWebSocketTTS
+from tool_declarations import ALL_TOOL_DECLARATIONS
+from tool_functions import AVAILABLE_FUNCTIONS
 
 # Load environment variables from .env file
 load_dotenv()
@@ -36,49 +27,6 @@ def speak_with_vapi(text: str):
         print("🔄 Falling back to alternative TTS...")
 
 
-# Define function declarations for the two tools
-describe_image_declaration = {
-    "name": "describe_image",
-    "description": "Describe the image and return a detailed description of it",
-    "parameters": {
-        "type": "object",
-        "properties": {
-            "image_path": {
-                "type": "string",
-                "description": "The path to the image file to describe"
-            }
-        },
-        "required": ["image_path"],
-    },
-}
-
-# Actual function implementations
-def describe_image(image_path: str) -> dict[str, str]:
-    model = "c4ai-aya-vision-8b"
-
-    co = cohere.ClientV2(os.getenv("COHERE_API_KEY"))
-
-    with open(image_path, "rb") as img_file:
-        base64_image_url = f"data:image/jpeg;base64,{base64.b64encode(img_file.read()).decode('utf-8')}"
-
-    response = co.chat(
-        model=model,
-        messages=[
-            {
-                "role": "user",
-                "content": [
-                    {"type": "text", "text": "Describe the image and return a detailed description of it"},
-                    {
-                        "type": "image_url",
-                        "image_url": {"url": base64_image_url},
-                    },
-                ],
-            }
-        ],
-        temperature=0.3,
-    )
-
-    return {"message": response.message.content[0].text}
 
 
 def continuous_speech_to_text(device_index=None):
@@ -88,7 +36,7 @@ def continuous_speech_to_text(device_index=None):
     recognizer = sr.Recognizer()
 
     client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-    tools = [types.Tool(function_declarations=[describe_image_declaration])]
+    tools = [types.Tool(function_declarations=ALL_TOOL_DECLARATIONS)]
     config = types.GenerateContentConfig(tools=tools)
     
     # Initialize microphone with specified device index
@@ -145,8 +93,8 @@ def continuous_speech_to_text(device_index=None):
                         function_args = function_call.args or {}
                         
                         # Execute the function if it exists
-                        if function_name in available_functions:
-                            result = available_functions[function_name](**function_args)
+                        if function_name in AVAILABLE_FUNCTIONS:
+                            result = AVAILABLE_FUNCTIONS[function_name](**function_args)
                             print(f"Function result: {result['message']}")
                             
                             # Send the function result back to the model for a final response
@@ -199,10 +147,6 @@ def continuous_speech_to_text(device_index=None):
             print(f"Unexpected error: {e}")
             break
 
-# Function mapping for execution
-available_functions = {
-    "describe_image": describe_image,
-}
 
 def main():
 
